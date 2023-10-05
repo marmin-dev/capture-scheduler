@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 //@RequiredArgsConstructor
 @AllArgsConstructor
 public class LandingPageRequestDto {
-
+    /*
+    * 랜딩페이지 등록 시 입력받을 dto
+    * */
     private String filename;
 
     private String urlPath;
@@ -20,10 +22,10 @@ public class LandingPageRequestDto {
 //        this.filename =
 //    }
 
-    public LandingPage toLandingPage(String filename, String urlPath){
+    public LandingPage toLandingPage(LandingPageRequestDto dto){
         return LandingPage.builder()
-                .url(urlPath)
-                .filename(filename)
+                .url(dto.getUrlPath())
+                .filename(dto.getFilename())
                 .captureYn("Y")
                 .build();
     }

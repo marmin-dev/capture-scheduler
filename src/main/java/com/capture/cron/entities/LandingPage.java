@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LandingPage {
+public class LandingPage extends BaseTimeEntity {
 
 
     @Id

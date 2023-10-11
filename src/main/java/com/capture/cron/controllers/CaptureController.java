@@ -3,7 +3,7 @@ package com.capture.cron.controllers;
 
 import com.capture.cron.common.exceptions.CustomException;
 import com.capture.cron.common.exceptions.ErrorCode;
-import com.capture.cron.dtos.CaptureRequestDto;
+import com.capture.cron.dtos.LandingPageRequestDto;
 import com.capture.cron.services.CaptureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class CaptureController {
     private final CaptureService service;
 
     @PostMapping
-    public ResponseEntity<String> selfCapture(@RequestBody CaptureRequestDto dto){
+    public ResponseEntity<String> selfCapture(@RequestBody LandingPageRequestDto dto){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.capture(dto.getFilename(), dto.getUrlPath()));
         }catch (Exception e){

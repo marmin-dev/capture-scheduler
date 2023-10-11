@@ -3,9 +3,11 @@ package com.capture.cron.services;
 import com.capture.cron.common.exceptions.CustomException;
 import com.capture.cron.common.exceptions.ErrorCode;
 import com.capture.cron.common.mapper.CaptureMapper;
+import com.capture.cron.dtos.LandingPageRequestDto;
 import com.capture.cron.repositories.LandingPageRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -57,10 +59,19 @@ public class CaptureService {
         } catch (Exception e){
             throw new CustomException(ErrorCode.CAPTURE_FAILED);
         }
-
-
-
     }
+
+
+//    @Transactional
+//    public String updateCapture(LandingPageRequestDto dto){
+//        /*
+//        * 캡처하는 메서드 , repository에서 값 검증 후 캡처 처리
+//        * 처리 후 해당 데이터 n으로 바꿈
+//        * */
+//
+//
+//
+//    }
 
 
 

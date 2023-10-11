@@ -14,4 +14,7 @@ public interface LandingPageRepository extends JpaRepository<LandingPage,Long> {
     List<LandingPage> findAllLandingPageByIdDesc();
 
 
+    @Query("SELECT l FROM LandingPage l WHERE captureYn = 'Y'")
+    List<LandingPage> findLandingPageByCaptureYn();
+
 }

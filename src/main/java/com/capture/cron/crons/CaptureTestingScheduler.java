@@ -1,7 +1,9 @@
 package com.capture.cron.crons;
 
 
+import com.capture.cron.dtos.LandingPageDto;
 import com.capture.cron.dtos.LandingPageRequestDto;
+import com.capture.cron.services.CaptureService;
 import com.capture.cron.services.LandingPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -17,6 +19,7 @@ import java.util.List;
 public class CaptureTestingScheduler {
     // 스케줄을 사용하여 특정 시간에 랜딩 페이지를 등록하고 특정 시간에 캡쳐 시작하는 메서드
 
+    private final CaptureService captureService;
     private final LandingPageService landingPageService;
 
     @Scheduled(cron = "0 50 14 * * *")
@@ -28,6 +31,7 @@ public class CaptureTestingScheduler {
 
 //        landingPageService.postLandingPage()
         List<LandingPageRequestDto> dtos = new ArrayList<>();
+        // 추가하기
         dtos.add(new LandingPageRequestDto("chimchakman" + now,"https://www.youtube.com/@ChimChakMan_Official"));
         dtos.add(new LandingPageRequestDto("mbcevery" + now,"https://www.youtube.com/@ChimChakMan_Official"));
         dtos.add(new LandingPageRequestDto("profile"+ now,"https://www.youtube.com/@ChimChakMan_Official"));
@@ -38,8 +42,15 @@ public class CaptureTestingScheduler {
     }
 
     @Scheduled(cron = "0 55 14 * * *")
-    public void captureLandingpage(){
+    public void captureLandingPage(){
         System.out.println("랜딩 페이지를 캡쳐합니다");
+        List<LandingPageDto> landingPages=landingPageService.findByCaptureYn();
+        landingPages.stream().map(dto -> {
+            captureService.capture(dto.getUrlPath(), dto.getFilename());
+            System.out.println(landingPageService.updateCapture(dto));
+            return "성공";
+        });
+
 
     }
 

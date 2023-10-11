@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -60,11 +61,36 @@ public class LandingPageService {
         return dtos;
     }
 
+    @Transactional
+    public List<LandingPageDto> findByCaptureYn(){
+        /*
+        * 캡쳐 유무에 따라 객체를 가져오는 서비스 로직
+        *
+        * */
+        List<LandingPageDto> dtos = repository
+            .findLandingPageByCaptureYn()
+            .stream()
+            .map(LandingPageDto::new)
+            .toList();
+        return dtos;
 
+    }
 
+    @Transactional
+    public String updateCapture(LandingPageDto dto){
+        /*
+        * 캡처하는 메서드 , repository에서 값 검증 후 캡처 처리
+        * 처리 후 해당 데이터 n으로 바꿈
+        * */
 
-
-
-
-
+        try {
+            LandingPage page = repository.findById(dto.getId()).get();
+            page.setCaptureYn("N");
+            Long id = repository.save(page).getId();
+            return "N으로 변경 완료" + id;
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.LANDING_NOT_FOUND);
+        }
+    }
 }
+
